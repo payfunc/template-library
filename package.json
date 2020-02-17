@@ -1,11 +1,15 @@
 {
- "name": "@payfunc/template-library",
+ "name": "template-library",
  "version": "0.0.0",
  "description": "Template for NPM library",
  "author": "PayFunc",
  "license": "MIT",
- "private": false,
  "repository": "https://github.com/payfunc/template-library",
+ "bugs": {
+  "url": "https://github.com/payfunc/template-library/issues"
+ },
+ "homepage": "https://payfunc.com/open-source/template-library",
+ "private": false,
  "main": "dist/index.js",
  "typings": "dist/index.d.ts",
  "git": {
