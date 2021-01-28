@@ -1,5 +1,5 @@
 {
-	"name": "template-library",
+	"name": "@payfunc/template-library",
 	"version": "0.0.0",
 	"description": "Template for NPM library",
 	"author": "PayFunc",
