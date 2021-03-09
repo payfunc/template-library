@@ -1,25 +1,42 @@
-name: Publish to github
+name: "Release"
 
 on:
   push:
     branches:
-      - master
+      - "master"
 
 jobs:
-  publish-gpr:
+  bump-version:
+    name: "Release from master"
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - name: "Checkout source code"
+        uses: "actions/checkout@v2"
         with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-cache
-      - uses: actions/setup-node@v2
+          ref: ${{ github.ref }}
+      - name: "cat package.json"
+        run: cat ./package.json
+      - name: "Setup Node.js"
+        uses: "actions/setup-node@v1"
         with:
-          node-version: '12.x'
-          registry-url: 'https://npm.pkg.github.com'
-      - run: npm --no-git-tag-version version patch -m "patch version bump %s [ci skip]"
+          node-version: 12
+      - run: echo "registry=https://registry.npmjs.org/"  >> .npmrc
+      - run: echo "@payfunc:registry=https://npm.pkg.github.com/payfunc"  >> .npmrc
+      - run: echo "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" >> .npmrc
+      - name: "Automated Version Bump"
+        id: version-bump
+        uses: "phips28/gh-action-bump-version@master"
+        with:
+          tag-prefix: ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "cat package.json"
+        run: cat ./package.json
+      - name:  'Output Step'
+        env:
+          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
+        run: echo "new tag $NEW_TAG"
       - run: npm install
       - run: npm run build
       - run: npm publish
