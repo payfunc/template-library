@@ -18,6 +18,9 @@
 	"github": {
 		"release": true
 	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	},
 	"jest": {
 		"globals": {
 			"ts-jest": {

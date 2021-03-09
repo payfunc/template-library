@@ -21,9 +21,7 @@ jobs:
         uses: "actions/setup-node@v1"
         with:
           node-version: 12
-      - run: echo "registry=https://registry.npmjs.org/"  >> .npmrc
-      - run: echo "@payfunc:registry=https://npm.pkg.github.com/payfunc"  >> .npmrc
-      - run: echo "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" >> .npmrc
+
       - name: "Automated Version Bump"
         id: version-bump
         uses: "phips28/gh-action-bump-version@master"
